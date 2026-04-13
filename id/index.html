@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="meta_title">Tes Kecepatan Bergerak Saya | Cek kecepatan bergerak Anda</title>
+    <meta name="description" content="Tes kecepatan bergerak Anda dengan mudah! Cek kecepatan kendaraan apa pun, lari, atau jalan kaki dengan alat tes kecepatan kami.">
+    <link rel="canonical" href="https://mymovingspeed.github.io/mymovingspeed/id/">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body data-theme="light">
+    <header>
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <a href="../" class="logo">
+                <span>My</span> <span class="red">Moving</span> <span>Speed</span>
+            </a>
+            
+            <nav class="nav-links">
+                <a href="../" data-i18n="nav_home">Beranda</a>
+                <a href="#other-tools" data-i18n="nav_tools">Alat Lainnya</a>
+                <a href="#blog" data-i18n="nav_blog">Blog</a>
+                <a href="#contact" data-i18n="nav_contact">Kontak</a>
+            </nav>
+
+            <div class="controls">
+                <select id="lang-select" class="lang-select">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="pt">Português</option>
+                    <option value="id" selected>Indonesia</option>
+                    <option value="tr">Türkçe</option>
+                </select>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Tool Section -->
+        <section class="hero">
+            <div class="container">
+                <h1 id="hero-title" data-i18n="intro_title">Tes Kecepatan Bergerak Saya</h1>
+                <p id="hero-desc" class="sub-heading" data-i18n="intro_text">Periksa kecepatan bergerak real-time Anda secara akurat menggunakan GPS untuk kendaraan atau aktivitas apa pun.</p>
+                
+                <div class="tool-card">
+                    <div class="mode-toggle">
+                        <button id="btn-analog" class="btn-toggle" data-i18n="analog">ANALOG</button>
+                        <button id="btn-digital" class="btn-toggle active" data-i18n="digital">DIGITAL</button>
+                    </div>
+
+                    <div class="speed-display">
+                        <div id="digital-container">
+                            <span id="speed-val" class="digital-speed">0</span>
+                            <span id="main-unit-label" class="unit-label">km/h</span>
+                        </div>
+
+                        <div id="analog-container" class="analog-container">
+                            <svg viewBox="0 0 300 300" class="analog-dial">
+                                <circle cx="150" cy="150" r="140" class="dial-bg"/>
+                                <g id="dial-dots"></g>
+                                <line id="needle" x1="150" y1="150" x2="150" y2="32" class="needle"/>
+                                <circle cx="150" cy="150" r="14" class="needle-center"/>
+                            </svg>
+                            <div class="analog-footer">
+                                <div class="speed-icon">
+                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="m12 14 4-4"/>
+                                        <path d="M3.34 19a10 10 0 1 1 17.32 0"/>
+                                    </svg>
+                                </div>
+                                <div class="analog-digital-overlay">
+                                    <span id="analog-speed-overlay">0</span>
+                                    <small id="overlay-unit-label">KM/H</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="unit-selector">
+                        <button class="unit-btn" data-unit="m/s">meter/detik</button>
+                        <button class="unit-btn" data-unit="mph">mil/jam</button>
+                        <button class="unit-btn active" data-unit="km/h">km/jam</button>
+                    </div>
+
+                    <button id="start-btn" class="btn-main" data-i18n="start">MULAI</button>
+                    
+                    <div class="status-info">
+                        <span id="accuracy-indicator" class="accuracy-indicator"></span> 
+                        <span data-i18n="accuracy">Akurasi GPS</span>: <span id="accuracy-val">--</span>
+                    </div>
+                </div>
+                <p data-i18n="permission_msg" style="margin-top: 25px; color: var(--text-dim); font-size: 0.95rem;">Harap aktifkan GPS ponsel Anda untuk hasil real-time yang akurat.</p>
+            </div>
+        </section>
+
+        <!-- Other Tools Section -->
+        <section id="other-tools" style="padding: 100px 0; background: var(--bg-body);">
+            <div class="container">
+                <div style="text-align: center; max-width: 800px; margin: 0 auto 50px auto;">
+                    <h2 id="other-tools-title" data-i18n="other_tools_title">Alat Profesional Lainnya</h2>
+                    <p id="other-tools-intro" data-i18n="other_tools_intro" style="color: var(--text-dim); font-size: 1.1rem;">Alat kecepatan utama kami serbaguna, tetapi tampilan khusus ini menawarkan pengalaman optimal untuk aktivitas tertentu.</p>
+                </div>
+                
+                <div class="tools-grid">
+                    <a href="../?mode=car" class="tool-item-card">
+                        <div class="tool-icon-circle">🚗</div>
+                        <h3 id="mode-car-title" data-i18n="mode_car_title">Speedometer Mobil</h3>
+                        <p id="mode-car-desc" data-i18n="mode_car_desc">Layar kontras tinggi yang dioptimalkan untuk pemasangan di dasbor dan akurasi kecepatan tinggi.</p>
+                    </a>
+                    
+                    <a href="../?mode=run" class="tool-item-card">
+                        <div class="tool-icon-circle">🏃</div>
+                        <h3 id="mode-run-title" data-i18n="mode_run_title">Pelacak Lari</h3>
+                        <p id="mode-run-desc" data-i18n="mode_run_desc">Pelacakan responsif yang dirancang untuk atlet dan pelari untuk memantau kecepatan secara real-time.</p>
+                    </a>
+                    
+                    <a href="../?mode=bike" class="tool-item-card">
+                        <div class="tool-icon-circle">🚲</div>
+                        <h3 id="mode-bike-title" data-i18n="mode_bike_title">Pelacak Bersepeda</h3>
+                        <p id="mode-bike-desc" data-i18n="mode_bike_desc">Dasbor digital yang sempurna untuk setang Anda, menunjukkan pelacakan kecepatan dan jarak.</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEO Content -->
+        <section id="content">
+            <div class="container">
+                <div style="max-width: 900px; margin: 0 auto; text-align: left; line-height: 1.7;">
+                    <h1 data-i18n="seo_main_title">Cek Kecepatan Bergerak Saya Secara Online – Kalkulator Kecepatan Jalan Kaki, Lari & Kendaraan</h1>
+                    
+                    <p data-i18n="seo_intro_p1" style="margin-bottom: 20px;">Pernahkah Anda bertanya-tanya “berapa kecepatan saya sekarang?” Baik Anda sedang berjalan kaki, joging, lari, bersepeda, mengemudi, atau bepergian dalam kendaraan, alat tes kecepatan bergerak membantu Anda mengukur gerakan real-time secara instan menggunakan GPS dan rumus perhitungan kecepatan yang cerdas.</p>
+                    
+                    <p data-i18n="seo_intro_p2" style="margin-bottom: 20px;">Alat My Moving Speed Test kami dirancang bagi siapa saja yang ingin mengecek kecepatan bergerak online dengan cepat dan akurat. Alat ini berfungsi sebagai pelacak kecepatan langsung, speedometer online, kalkulator kecepatan jalan kaki, kalkulator kecepatan lari, dan bahkan alat tes kecepatan kendaraan—semuanya dalam satu tempat.</p>
+                    
+                    <p data-i18n="seo_intro_p3" style="margin-bottom: 40px;">Dalam panduan ini, Anda akan mempelajari cara kerja kecepatan bergerak, cara menghitungnya, cara pemeriksa kecepatan online mengukurnya, dan cara menggunakan alat tes kecepatan bergerak gratis secara efektif.</p>
+
+                    <h2 data-i18n="seo_h2_whatis" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Apa Itu Kecepatan Bergerak Saya?</h2>
+                    <p data-i18n="seo_whatis_p1">Kecepatan bergerak berarti seberapa cepat Anda bepergian dari satu tempat ke tempat lain seiring waktu. Ini berlaku untuk:</p>
+                    <div class="content-grid" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 20px 0;">
+                        <ul style="list-style: none; padding: 0;">
+                            <li data-i18n="seo_whatis_li1">• Kecepatan jalan kaki</li>
+                            <li data-i18n="seo_whatis_li2">• Kecepatan lari</li>
+                            <li data-i18n="seo_whatis_li3">• Kecepatan joging</li>
+                            <li data-i18n="seo_whatis_li4">• Kecepatan mobil</li>
+                        </ul>
+                        <ul style="list-style: none; padding: 0;">
+                            <li data-i18n="seo_whatis_li5">• Kecepatan sepeda</li>
+                            <li data-i18n="seo_whatis_li6">• Kecepatan kereta api</li>
+                            <li data-i18n="seo_whatis_li7">• Kecepatan bus</li>
+                            <li data-i18n="seo_whatis_li8">• Kecepatan perjalanan umum</li>
+                        </ul>
+                    </div>
+                    <p data-i18n="seo_whatis_p2" style="font-style: italic; color: var(--text-dim);">Sederhananya, jika Anda pernah bertanya: Berapa kecepatan saya saat ini? Berapa kecepatan saya? Seberapa cepat saya bergerak? Kecepatan saya dalam km/jam? Maka Anda sedang mencoba mengukur kecepatan bergerak Anda.</p>
+
+                    <h2 data-i18n="seo_h2_howworks" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Cara Kerja Tes Kecepatan Bergerak</h2>
+                    <p data-i18n="seo_howworks_p1">Alat tes kecepatan bergerak biasanya mengukur kecepatan Anda menggunakan salah satu metode ini:</p>
+                    
+                    <div class="content-card" style="margin: 20px 0;">
+                        <h3 data-i18n="seo_h3_gps">1. Pelacakan Kecepatan GPS</h3>
+                        <p data-i18n="seo_gps_p1">Kebanyakan alat pelacak kecepatan modern menggunakan GPS untuk menghitung lokasi Anda dari waktu ke waktu dan menentukan kecepatan. Terbaik untuk: Jalan Kaki, Lari, Mengemudi, Bersepeda, Perjalanan Kereta Api/Bus.</p>
+                    </div>
+
+                    <div class="content-card" style="margin: 20px 0;">
+                        <h3 data-i18n="seo_h3_formula">2. Rumus Jarak + Waktu</h3>
+                        <p data-i18n="seo_formula_p1">Kalkulator kecepatan manual menggunakan rumus kecepatan dasar: <strong>Kecepatan = Jarak / Waktu</strong>.</p>
+                        <div style="background: var(--bg-body); padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary); margin: 15px 0;">
+                            <p data-i18n="seo_formula_example">Contoh: Jarak = 10 km, Waktu = 30 menit (0,5 jam). Kecepatan = 10 / 0,5 = 20 km/jam.</p>
+                        </div>
+                        <p data-i18n="seo_formula_footer" style="font-size: 0.9rem;">Metode ini digunakan di banyak kalkulator kecepatan waktu jarak dan kalkulator rumus kecepatan.</p>
+                    </div>
+
+                    <h2 data-i18n="seo_h2_whyuse" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Mengapa Menggunakan Kalkulator Kecepatan Bergerak Online?</h2>
+                    <p data-i18n="seo_whyuse_p1">Kalkulator kecepatan bergerak online membantu Anda:</p>
+                    <ul style="margin: 20px 0; padding-left: 20px;">
+                        <li data-i18n="seo_whyuse_li1">Cek kecepatan jalan kaki online</li>
+                        <li data-i18n="seo_whyuse_li2">Ukur kecepatan lari dengan ponsel</li>
+                        <li data-i18n="seo_whyuse_li3">Lacak kecepatan kendaraan tanpa dasbor</li>
+                        <li data-i18n="seo_whyuse_li4">Tahu seberapa cepat mobil Anda melaju</li>
+                        <li data-i18n="seo_whyuse_li5">Konversi ritme lari (pace) ke kecepatan</li>
+                        <li data-i18n="seo_whyuse_li6">Perkirakan kecepatan perjalanan</li>
+                        <li data-i18n="seo_whyuse_li7">Pantau kecepatan gerak real-time</li>
+                    </ul>
+                    <p data-i18n="seo_whyuse_footer" style="font-weight: 600;">Ini bertindak seperti speedometer digital online langsung di browser Anda.</p>
+
+                    <h2 data-i18n="seo_h2_features" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Fitur Alat My Moving Speed Test</h2>
+                    <p data-i18n="seo_features_p1">Alat pemeriksa kecepatan kami dapat berfungsi sebagai:</p>
+                    
+                    <div class="content-grid" style="margin: 20px 0;">
+                        <div>
+                            <h3 data-i18n="seo_h3_walk_check" style="font-size: 1.25rem;">Pemeriksa Kecepatan Jalan Kaki</h3>
+                            <ul style="padding-left: 20px; font-size: 0.95rem;">
+                                <li data-i18n="seo_walk_check_li1">Kecepatan jalan kaki</li>
+                                <li data-i18n="seo_walk_check_li2">Rata-rata kecepatan jalan kaki</li>
+                                <li data-i18n="seo_walk_check_li3">Estimasi kecepatan berdasarkan langkah</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 data-i18n="seo_h3_run_calc" style="font-size: 1.25rem;">Kalkulator Kecepatan Lari</h3>
+                            <ul style="padding-left: 20px; font-size: 0.95rem;">
+                                <li data-i18n="seo_run_calc_li1">Kecepatan lari</li>
+                                <li data-i18n="seo_run_calc_li2">Rata-rata kecepatan lari</li>
+                                <li data-i18n="seo_run_calc_li3">Kecepatan joging</li>
+                                <li data-i18n="seo_run_calc_li4">Konversi pace ke kecepatan</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="content-grid" style="margin: 20px 0;">
+                        <div>
+                            <h3 data-i18n="seo_h3_veh_test" style="font-size: 1.25rem;">Tes Kecepatan Kendaraan</h3>
+                            <ul style="padding-left: 20px; font-size: 0.95rem;">
+                                <li data-i18n="seo_veh_test_li1">Tes kecepatan mobil</li>
+                                <li data-i18n="seo_veh_test_li2">Tes kecepatan sepeda</li>
+                                <li data-i18n="seo_veh_test_li3">Tes kecepatan kereta api</li>
+                                <li data-i18n="seo_veh_test_li4">Kalkulator kecepatan bus</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 data-i18n="seo_h3_live_speed" style="font-size: 1.25rem;">Live Speedometer GPS</h3>
+                            <ul style="padding-left: 20px; font-size: 0.95rem;">
+                                <li data-i18n="seo_live_speed_li1">Pemeriksa kecepatan bergerak real-time</li>
+                                <li data-i18n="seo_live_speed_li2">Pelacak kecepatan GPS online</li>
+                                <li data-i18n="seo_live_speed_li3">Tes kecepatan langsung mobil</li>
+                                <li data-i18n="seo_live_speed_li4">Pemantauan kecepatan gerak</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h2 data-i18n="seo_h2_howtocheck" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Cara Mengecek Kecepatan Bergerak Saya Secara Online</h2>
+                    <p data-i18n="seo_howtocheck_p1">Jika Anda bertanya-tanya bagaimana cara mengecek kecepatan bergerak saya secara online, ikuti langkah-langkah berikut:</p>
+                    
+                    <div style="margin: 30px 0;">
+                        <div style="margin-bottom: 20px;">
+                            <h4 data-i18n="seo_step1_title" style="color: var(--primary);">Langkah 1: Buka Alat Kecepatan</h4>
+                            <p data-i18n="seo_step1_desc">Kunjungi situs web pemeriksa kecepatan bergerak.</p>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <h4 data-i18n="seo_step2_title" style="color: var(--primary);">Langkah 2: Berikan Akses Lokasi</h4>
+                            <p data-i18n="seo_step2_desc">Izin GPS diperlukan untuk pelacakan yang akurat.</p>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <h4 data-i18n="seo_step3_title" style="color: var(--primary);">Langkah 3: Mulai Bergerak</h4>
+                            <p data-i18n="seo_step3_desc">Berjalan, lari, mengemudi, atau bepergian secara normal.</p>
+                        </div>
+                        <div>
+                            <h4 data-i18n="seo_step4_title" style="color: var(--primary);">Langkah 4: Lihat Kecepatan Langsung</h4>
+                            <p data-i18n="seo_step4_desc">Alat akan menampilkan kecepatan saat ini, rata-rata, dan maksimum dalam km/jam atau mph.</p>
+                        </div>
+                    </div>
+
+                    <h2 data-i18n="seo_h2_walkguide" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Panduan Kecepatan Jalan Kaki</h2>
+                    <h3 data-i18n="seo_h3_avgwalk">Berapa Rata-Rata Kecepatan Jalan Kaki?</h3>
+                    <p data-i18n="seo_avgwalk_p1">Rata-rata kecepatan jalan kaki untuk kebanyakan orang dewasa adalah <strong>4 hingga 5 km/jam (2,5 hingga 3,1 mph)</strong>.</p>
+                    
+                    <strong data-i18n="seo_factors_title" style="display: block; margin-top: 15px;">Faktor yang memengaruhi kecepatan jalan kaki:</strong>
+                    <ul style="padding-left: 20px; margin-bottom: 20px;">
+                        <li data-i18n="seo_factors_li1">Usia</li>
+                        <li data-i18n="seo_factors_li2">Tingkat kebugaran</li>
+                        <li data-i18n="seo_factors_li3">Medan</li>
+                        <li data-i18n="seo_factors_li4">Cuaca</li>
+                        <li data-i18n="seo_factors_li5">Kondisi kesehatan</li>
+                    </ul>
+
+                    <h3 data-i18n="seo_h3_measwalking">Cara Mengukur Kecepatan Saat Berjalan Kaki</h3>
+                    <p data-i18n="seo_measwalking_p1">Gunakan pelacak kecepatan GPS online atau kalkulator kecepatan jalan kaki untuk menjawab: Seberapa cepat saya berjalan?</p>
+
+                    <h2 data-i18n="seo_h2_runguide" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Panduan Kecepatan Lari</h2>
+                    <h3 data-i18n="seo_h3_normrun">Berapa Kecepatan Lari Normal?</h3>
+                    <table style="width: 100%; border-collapse: collapse; margin: 20px 0; background: var(--bg-card); border-radius: 12px; overflow: hidden;">
+                        <thead>
+                            <tr style="background: var(--primary); color: white;">
+                                <th data-i18n="seo_run_table_act" style="padding: 12px; text-align: left;">Aktivitas</th>
+                                <th data-i18n="seo_run_table_speed" style="padding: 12px; text-align: left;">Kecepatan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-i18n="seo_run_jog" colspan="2" style="padding: 12px; border-bottom: 1px solid var(--border);">Joging: 6–8 km/jam</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="seo_run_light" colspan="2" style="padding: 12px; border-bottom: 1px solid var(--border);">Lari Ringan: 8–10 km/jam</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="seo_run_moderate" colspan="2" style="padding: 12px; border-bottom: 1px solid var(--border);">Lari Sedang: 10–13 km/jam</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="seo_run_fast" colspan="2" style="padding: 12px;">Lari Cepat: 13–18+ km/jam</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 data-i18n="seo_h3_fanthrun">Seberapa Cepat Manusia Bisa Berlari?</h3>
+                    <p data-i18n="seo_fasthrun_p1">Pelari cepat elit dapat melebihi 35–45 km/jam untuk ledakan singkat. Kebanyakan pelari rekreasi berlari 8–12 km/jam.</p>
+
+                    <h2 data-i18n="seo_h2_vehguide" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Panduan Tes Kecepatan Kendaraan</h2>
+                    <h3 data-i18n="seo_h3_carspeedtest">Apa Itu Tes Kecepatan Mobil Saya?</h3>
+                    <p data-i18n="seo_carspeed_p1">Tes kecepatan mobil memeriksa kecepatan kendaraan Anda menggunakan GPS saat dasbor Anda rusak atau Anda memerlukan verifikasi.</p>
+                    
+                    <h3 data-i18n="seo_h3_supportedveh">Jenis Kendaraan yang Didukung</h3>
+                    <p data-i18n="seo_supported_p1">Alat kami berfungsi untuk Mobil, Sepeda, Kereta Api, dan Bus. Anda dapat menggunakannya sebagai speedometer online saat bepergian.</p>
+
+                    <h2 data-i18n="seo_h2_form_exp" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Rumus Kecepatan Dijelaskan</h2>
+                    <p data-i18n="seo_form_exp_p1">Untuk menghitung kecepatan secara manual: <strong>v = d / t</strong> (v=Kecepatan, d=Jarak, t=Waktu).</p>
+                    <p data-i18n="seo_form_example_p1" style="background: var(--bg-card); padding: 15px; border-radius: 8px;">Jika Anda bepergian 120 km dalam 2 jam, maka Kecepatan = 120 / 2 = 60 km/jam.</p>
+
+                    <h2 data-i18n="seo_h2_pop_conv" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Konversi Kecepatan Populer</h2>
+                    <p data-i18n="seo_conv_p1" style="font-family: monospace; background: var(--bg-body); padding: 15px; border-radius: 8px;">1 km/jam = 0,27778 m/detik | 1 mph = 1,60934 km/jam</p>
+
+                    <h2 data-i18n="seo_h2_gps_use" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Mengapa Pelacakan Kecepatan GPS Berguna</h2>
+                    <p data-i18n="seo_gps_use_p1">Tes kecepatan GPS memberikan pengukuran real-time tanpa perhitungan manual. Manfaatnya termasuk pelacakan langsung yang akurat untuk semua jenis gerakan pada perangkat seluler.</p>
+
+                    <h2 data-i18n="seo_h2_bestuses" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Penggunaan Terbaik untuk Alat Pelacak Kecepatan</h2>
+                    <ul style="padding-left: 20px;">
+                        <li data-i18n="seo_bestuses_li1" style="margin-bottom: 10px;">Kebugaran: Latihan lari, perbaikan jalan kaki, pelacakan langkah maraton.</li>
+                        <li data-i18n="seo_bestuses_li2" style="margin-bottom: 10px;">Perjalanan: Pemantauan kecepatan kendaraan, pemeriksaan kecepatan perjalanan bus/kereta api.</li>
+                        <li data-i18n="seo_bestuses_li3" style="margin-bottom: 10px;">Olahraga: Analisis sprint, pengukuran kecepatan bersepeda.</li>
+                        <li data-i18n="seo_bestuses_li4">Pendidikan: Mempelajari rumus kecepatan, latihan fisika.</li>
+                    </ul>
+
+                    <h2 data-i18n="seo_h2_acc_tips" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Tips Akurasi untuk Hasil Terbaik</h2>
+                    <ul style="padding-left: 20px;">
+                        <li data-i18n="seo_acc_tips_li1" style="margin-bottom: 10px;">Gunakan di luar ruangan untuk sinyal GPS yang kuat. Pastikan GPS ponsel aktif.</li>
+                        <li data-i18n="seo_acc_tips_li2">Hindari terowongan/area dalam ruangan. Tunggu beberapa detik untuk kalibrasi.</li>
+                    </ul>
+
+                    <h2 data-i18n="seo_h2_whysearch" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Mengapa Orang Mencari “Berapa Kecepatan Saya?”</h2>
+                    <p data-i18n="seo_whysearch_p1">Pengguna menginginkan pemeriksa kecepatan instan tanpa mengunduh aplikasi untuk menjawab 'Seberapa cepat saya bergerak sekarang?'</p>
+
+                    <p data-i18n="seo_final_thoughts" style="margin-top: 40px; padding: 20px; background: var(--bg-card); border-radius: 12px; font-weight: 500;">Alat My Moving Speed Test adalah salah satu cara termudah untuk mengukur kecepatan online. Baik Anda butuh tes kecepatan langsung atau kalkulator rumus kecepatan, alat ini menyediakan semuanya dalam satu tempat.</p>
+
+                    <h2 data-i18n="faq_title" style="margin-top: 60px; margin-bottom: 30px; font-size: 2.5rem; text-align: center;">Pertanyaan yang Sering Diajukan</h2>
+                    
+                    <div class="content-card" style="margin-bottom: 20px;">
+                        <strong data-i18n="seo_faq_q1">Bagaimana cara menghitung kecepatan bergerak saya?</strong>
+                        <p data-i18n="seo_faq_a1">Gunakan rumus: Kecepatan = Jarak ÷ Waktu. Anda juga bisa menggunakan kalkulator kecepatan bergerak berbasis GPS untuk pengukuran otomatis.</p>
+                    </div>
+                    
+                    <div class="content-card" style="margin-bottom: 20px;">
+                        <strong data-i18n="seo_faq_q2">Apa itu kecepatan bergerak?</strong>
+                        <p data-i18n="seo_faq_a2">Kecepatan bergerak berarti seberapa cepat suatu benda atau orang bepergian melalui jarak tertentu dalam waktu tertentu.</p>
+                    </div>
+                    
+                    <div class="content-card" style="margin-bottom: 20px;">
+                        <strong data-i18n="seo_faq_q3">Berapa rata-rata kecepatan jalan kaki?</strong>
+                        <p data-i18n="seo_faq_a3">Rata-rata kecepatan jalan kaki biasanya 4–5 km/jam untuk orang dewasa.</p>
+                    </div>
+                    
+                    <div class="content-card" style="margin-bottom: 20px;">
+                        <strong data-i18n="seo_faq_q4">Bagaimana cara mengukur kecepatan saat berjalan kaki?</strong>
+                        <p data-i18n="seo_faq_a4">Gunakan alat pelacak kecepatan GPS atau kalkulator kecepatan jalan kaki di ponsel Anda.</p>
+                    </div>
+                    
+                    <div class="content-card" style="margin-bottom: 20px;">
+                        <strong data-i18n="seo_faq_q5">Bagaimana cara menghitung kecepatan lari?</strong>
+                        <p data-i18n="seo_faq_a5">Bagi jarak lari dengan waktu yang ditempuh, atau gunakan kalkulator kecepatan lari.</p>
+                    </div>
+                    
+                    <div class="content-card" style="margin-bottom: 20px;">
+                        <strong data-i18n="seo_faq_q6">Seberapa cepat manusia bisa berlari?</strong>
+                        <p data-i18n="seo_faq_a6">Pelari cepat elit dapat mencapai 35–45 km/jam dalam waktu singkat.</p>
+                    </div>
+
+                    <div class="content-card" style="margin-bottom: 20px;">
+                        <strong data-i18n="seo_faq_q7">Berapa kecepatan lari normal?</strong>
+                        <p data-i18n="seo_faq_a7">Kecepatan lari normal biasanya 8–12 km/jam.</p>
+                    </div>
+
+                    <div class="content-card" style="margin-bottom: 20px;">
+                        <strong data-i18n="seo_faq_q8">Bagaimana cara cek kecepatan kendaraan tanpa speedometer?</strong>
+                        <p data-i18n="seo_faq_a8">Gunakan speedometer GPS online atau situs web pelacakan kecepatan.</p>
+                    </div>
+
+                    <div class="content-card" style="margin-bottom: 20px;">
+                        <strong data-i18n="seo_faq_q9">Bagaimana cara mengukur kecepatan menggunakan ponsel?</strong>
+                        <p data-i18n="seo_faq_a9">Aktifkan GPS di ponsel Anda dan gunakan alat pelacak kecepatan langsung.</p>
+                    </div>
+
+                    <div class="content-card">
+                        <strong data-i18n="seo_faq_q10">Apa rumus kecepatan?</strong>
+                        <p data-i18n="seo_faq_a10">Rumus kecepatan adalah: Kecepatan = Jarak / Waktu.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Blog/Latest Articles Section -->
+        <section id="blog" style="padding: 100px 0; background: var(--bg-card);">
+            <div class="container">
+                <div style="text-align: center; max-width: 800px; margin: 0 auto 50px auto;">
+                    <h2 id="blog-title" data-i18n="blog_title">Terbaru dari Blog</h2>
+                    <p id="blog-intro" data-i18n="blog_intro" style="color: var(--text-dim); font-size: 1.1rem;">Wawasan ahli, panduan, dan tips tentang pelacakan kecepatan GPS dan alat web modern.</p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                    <article class="tool-item-card" style="text-align: left; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+                        <img src="../assets/images/gps-article-header.png" alt="How to Check Your Moving Speed" style="width: 100%; height: 200px; object-fit: cover;">
+                        <div style="padding: 25px;">
+                            <h3 style="margin-bottom: 15px; font-size: 1.5rem;">How to Check Your Moving Speed Online Using GPS</h3>
+                            <p style="color: var(--text-dim); margin-bottom: 20px; font-size: 0.95rem;">A comprehensive guide on how GPS speed tracking works, mobile speed test tools, and why browser-based speedometers are the best choice for privacy.</p>
+                            <a href="/how-to-check-your-moving-speed-online-using-gps.html" class="red" style="font-weight: 700; text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em;">Read Full Article →</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <ul>
+                    <li><a href="/about.html" data-i18n="footer_about">Tentang Kami</a></li>
+                    <li><a href="/contact.html" data-i18n="footer_contact">Hubungi Kami</a></li>
+                    <li><a href="/privacy-policy.html" data-i18n="footer_privacy">Kebijakan Privasi</a></li>
+                    <li><a href="/disclaimer.html" data-i18n="footer_disclaimer">Penafian</a></li>
+                    <li><a href="/terms.html" data-i18n="footer_terms">Syarat & Ketentuan</a></li>
+                </ul>
+            </div>
+            <div class="copyright">
+                © 2026 https://mymovingspeed.github.io/
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/script.js"></script>
+</body>
+</html>

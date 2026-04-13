@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mymovingspeed.github.io/sitemap.xml

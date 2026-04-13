@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="meta_title">Prueba de mi velocidad de movimiento | Comprueba tu velocidad de movimiento</title>
+    <meta name="description" content="¡Prueba tu velocidad de movimiento fácilmente! Comprueba la velocidad de cualquier vehículo, corriendo o caminando con nuestra herramienta.">
+    <link rel="canonical" href="https://mymovingspeed.github.io/mymovingspeed/es/">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "My Moving Speed",
+      "url": "https://mymovingspeed.github.io/mymovingspeed/es/",
+      "description": "Prueba tu velocidad de movimiento fácilmente usando GPS. Soporta km/h, mph y m/s.",
+      "applicationCategory": "ToolApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0"
+      }
+    }
+    </script>
+</head>
+<body data-theme="light">
+    <header>
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <a href="../" class="logo">
+                <span>My</span> <span class="red">Moving</span> <span>Speed</span>
+            </a>
+            
+            <nav class="nav-links">
+                <a href="../" data-i18n="nav_home">Inicio</a>
+                <a href="#other-tools" data-i18n="nav_tools">Otras Herramientas</a>
+                <a href="#blog" data-i18n="nav_blog">Blog</a>
+                <a href="#contact" data-i18n="nav_contact">Contacto</a>
+            </nav>
+
+            <div class="controls">
+                <select id="lang-select" class="lang-select">
+                    <option value="en">English</option>
+                    <option value="es" selected>Español</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="pt">Português</option>
+                    <option value="id">Indonesia</option>
+                    <option value="tr">Türkçe</option>
+                </select>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Tool Section -->
+        <section class="hero">
+            <div class="container">
+                <h1 id="hero-title" data-i18n="intro_title">Prueba de mi velocidad de movimiento</h1>
+                <p id="hero-desc" class="sub-heading" data-i18n="intro_text">Compruebe su velocidad de movimiento en tiempo real con precisión mediante GPS para cualquier vehículo o actividad.</p>
+                
+                <div class="tool-card">
+                    <div class="mode-toggle">
+                        <button id="btn-analog" class="btn-toggle" data-i18n="analog">ANALÓGICO</button>
+                        <button id="btn-digital" class="btn-toggle active" data-i18n="digital">DIGITAL</button>
+                    </div>
+
+                    <div class="speed-display">
+                        <div id="digital-container">
+                            <span id="speed-val" class="digital-speed">0</span>
+                            <span id="main-unit-label" class="unit-label">km/h</span>
+                        </div>
+
+                        <div id="analog-container" class="analog-container">
+                            <svg viewBox="0 0 300 300" class="analog-dial">
+                                <circle cx="150" cy="150" r="140" class="dial-bg"/>
+                                <g id="dial-dots"></g>
+                                <line id="needle" x1="150" y1="150" x2="150" y2="32" class="needle"/>
+                                <circle cx="150" cy="150" r="14" class="needle-center"/>
+                            </svg>
+                            <div class="analog-footer">
+                                <div class="speed-icon">
+                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="m12 14 4-4"/>
+                                        <path d="M3.34 19a10 10 0 1 1 17.32 0"/>
+                                    </svg>
+                                </div>
+                                <div class="analog-digital-overlay">
+                                    <span id="analog-speed-overlay">0</span>
+                                    <small id="overlay-unit-label">KM/H</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="unit-selector">
+                        <button class="unit-btn" data-unit="m/s">metro/segundo</button>
+                        <button class="unit-btn" data-unit="mph">millas/hora</button>
+                        <button class="unit-btn active" data-unit="km/h">km/hora</button>
+                    </div>
+
+                    <button id="start-btn" class="btn-main" data-i18n="start">INICIAR</button>
+                    
+                    <div class="status-info">
+                        <span id="accuracy-indicator" class="accuracy-indicator"></span> 
+                        <span data-i18n="accuracy">Precisión GPS</span>: <span id="accuracy-val">--</span>
+                    </div>
+                </div>
+                <p data-i18n="permission_msg" style="margin-top: 25px; color: var(--text-dim); font-size: 0.95rem;">Por favor, activa el GPS de tu teléfono para que esta herramienta funcione</p>
+            </div>
+        </section>
+        
+        <!-- Other Tools Section -->
+        <section id="other-tools" style="padding: 100px 0; background: var(--bg-body);">
+            <div class="container">
+                <div style="text-align: center; max-width: 800px; margin: 0 auto 50px auto;">
+                    <h2 id="other-tools-title" data-i18n="other_tools_title">Otras Herramientas</h2>
+                    <p id="other-tools-intro" data-i18n="other_tools_intro" style="color: var(--text-dim); font-size: 1.1rem;">Nuestra herramienta principal es versátil, pero estas vistas especializadas ofrecen experiencias optimizadas para actividades específicas.</p>
+                </div>
+                
+                <div class="tools-grid">
+                    <a href="../?mode=car" class="tool-item-card">
+                        <div class="tool-icon-circle">🚗</div>
+                        <h3 id="mode-car-title" data-i18n="mode_car_title">Velocímetro de Coche</h3>
+                        <p id="mode-car-desc" data-i18n="mode_car_desc">Pantalla de alto contraste optimizada para montaje en el tablero y precisión a alta velocidad.</p>
+                    </a>
+                    
+                    <a href="../?mode=run" class="tool-item-card">
+                        <div class="tool-icon-circle">🏃</div>
+                        <h3 id="mode-run-title" data-i18n="mode_run_title">Seguimiento de Carrera</h3>
+                        <p id="mode-run-desc" data-i18n="mode_run_desc">Seguimiento sensible diseñado para que atletas y corredores controlen el ritmo en tiempo real.</p>
+                    </a>
+                    
+                    <a href="../?mode=bike" class="tool-item-card">
+                        <div class="tool-icon-circle">🚲</div>
+                        <h3 id="mode-bike-title" data-i18n="mode_bike_title">Seguimiento de Ciclismo</h3>
+                        <p id="mode-bike-desc" data-i18n="mode_bike_desc">El panel digital perfecto para tu manillar, que muestra la velocidad y el seguimiento de la distancia.</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEO Content -->
+        <section id="content">
+            <div class="container">
+                <div style="max-width: 900px; margin: 0 auto; text-align: left; line-height: 1.7;">
+                    <h1 data-i18n="seo_main_title">Comprobar mi velocidad de movimiento en línea – Calculadora de velocidad para caminar, correr y vehículos</h1>
+                    
+                    <p data-i18n="seo_intro_p1" style="margin-bottom: 20px;">¿Alguna vez te has preguntado “cuál es mi velocidad ahora mismo?” Ya sea que estés caminando, trotando, corriendo, en bicicleta, conduciendo o viajando en un vehículo, una herramienta de prueba de velocidad de movimiento te ayuda a medir instantáneamente tu movimiento en tiempo real utilizando GPS y fórmulas inteligentes de cálculo de velocidad.</p>
+                    
+                    <p data-i18n="seo_intro_p2" style="margin-bottom: 20px;">Nuestra herramienta My Moving Speed Test está diseñada para cualquier persona que quiera comprobar su velocidad de movimiento en línea de forma rápida y precisa. Funciona como un rastreador de velocidad en vivo, velocímetro en línea, calculadora de velocidad al caminar, calculadora de velocidad al correr e incluso una herramienta de prueba de velocidad de vehículos, todo en un solo lugar.</p>
+                    
+                    <p data-i18n="seo_intro_p3" style="margin-bottom: 40px;">En esta guía, aprenderás cómo funciona la velocidad de movimiento, cómo calcularla, cómo la miden los verificadores de velocidad en línea y cómo usar una herramienta de prueba de velocidad de movimiento gratuita de manera efectiva.</p>
+
+                    <h2 data-i18n="seo_h2_whatis" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">¿Cuál es mi velocidad de movimiento?</h2>
+                    <p data-i18n="seo_whatis_p1">La velocidad de movimiento se refiere a qué tan rápido te trasladas de un lugar a otro a lo largo del tiempo. Se aplica a:</p>
+                    <div class="content-grid" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 20px 0;">
+                        <ul style="list-style: none; padding: 0;">
+                            <li data-i18n="seo_whatis_li1">• Velocidad al caminar</li>
+                            <li data-i18n="seo_whatis_li2">• Velocidad al correr</li>
+                            <li data-i18n="seo_whatis_li3">• Velocidad al trotar</li>
+                            <li data-i18n="seo_whatis_li4">• Velocidad del coche</li>
+                        </ul>
+                        <ul style="list-style: none; padding: 0;">
+                            <li data-i18n="seo_whatis_li5">• Velocidad de la bicicleta</li>
+                            <li data-i18n="seo_whatis_li6">• Velocidad del tren</li>
+                            <li data-i18n="seo_whatis_li7">• Velocidad del autobús</li>
+                            <li data-i18n="seo_whatis_li8">• Velocidad de viaje general</li>
+                        </ul>
+                    </div>
+                    <p data-i18n="seo_whatis_p2" style="font-style: italic; color: var(--text-dim);">En palabras sencillas, si alguna vez te has preguntado: ¿Cuál es mi velocidad actual? ¿A qué velocidad voy? ¿Qué tan rápido me muevo? ¿Mi velocidad en km/h? Entonces estás tratando de medir tu velocidad de movimiento.</p>
+
+                    <h2 data-i18n="seo_h2_howworks" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Cómo funciona una prueba de velocidad de movimiento</h2>
+                    <p data-i18n="seo_howworks_p1">Una herramienta de prueba de velocidad de movimiento generalmente mide tu velocidad utilizando uno de estos métodos:</p>
+                    
+                    <div class="content-card" style="margin: 20px 0;">
+                        <h3 data-i18n="seo_h3_gps">1. Seguimiento de velocidad por GPS</h3>
+                        <p data-i18n="seo_gps_p1">La mayoría de las herramientas modernas de seguimiento de velocidad utilizan el GPS para calcular tu ubicación a lo largo del tiempo y determinar la velocidad. Ideal para: caminar, correr, conducir, andar en bicicleta, viajar en tren/autobús.</p>
+                    </div>
+
+                    <div class="content-card" style="margin: 20px 0;">
+                        <h3 data-i18n="seo_h3_formula">2. Fórmula de distancia + tiempo</h3>
+                        <p data-i18n="seo_formula_p1">Las calculadoras de velocidad manuales utilizan la fórmula de velocidad básica: <strong>Velocidad = Distancia / Tiempo</strong>.</p>
+                        <div style="background: var(--bg-body); padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary); margin: 15px 0;">
+                            <p data-i18n="seo_formula_example">Ejemplo: Distancia = 10 km, Tiempo = 30 minutos (0,5 horas). Velocidad = 10 / 0,5 = 20 km/h.</p>
+                        </div>
+                        <p data-i18n="seo_formula_footer" style="font-size: 0.9rem;">Este método se utiliza en muchas calculadoras de velocidad por distancia y tiempo y calculadoras de fórmulas de velocidad.</p>
+                    </div>
+
+                    <h2 data-i18n="seo_h2_whyuse" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">¿Por qué utilizar una calculadora de velocidad de movimiento en línea?</h2>
+                    <p data-i18n="seo_whyuse_p1">Una calculadora de velocidad de movimiento en línea te ayuda a:</p>
+                    <ul style="margin: 20px 0; padding-left: 20px;">
+                        <li data-i18n="seo_whyuse_li1">Comprobar la velocidad al caminar en línea</li>
+                        <li data-i18n="seo_whyuse_li2">Medir la velocidad al correr con el teléfono</li>
+                        <li data-i18n="seo_whyuse_li3">Rastrear la velocidad del vehículo sin tablero</li>
+                        <li data-i18n="seo_whyuse_li4">Saber qué tan rápido va tu coche</li>
+                        <li data-i18n="seo_whyuse_li5">Convertir ritmo a velocidad</li>
+                        <li data-i18n="seo_whyuse_li6">Estimar la velocidad de viaje</li>
+                        <li data-i18n="seo_whyuse_li7">Monitorear la velocidad de movimiento en tiempo real</li>
+                    </ul>
+                    <p data-i18n="seo_whyuse_footer" style="font-weight: 600;">Actúa como un velocímetro digital en línea directamente en tu navegador.</p>
+
+                    <h2 data-i18n="seo_h2_features" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Características de la herramienta My Moving Speed Test</h2>
+                    <p data-i18n="seo_features_p1">Nuestra herramienta de verificación de velocidad puede funcionar como:</p>
+                    
+                    <div class="content-grid" style="margin: 20px 0;">
+                        <div>
+                            <h3 data-i18n="seo_h3_walk_check" style="font-size: 1.25rem;">Verificador de velocidad al caminar</h3>
+                            <ul style="padding-left: 20px; font-size: 0.95rem;">
+                                <li data-i18n="seo_walk_check_li1">Velocidad al caminar</li>
+                                <li data-i18n="seo_walk_check_li2">Velocidad promedio al caminar</li>
+                                <li data-i18n="seo_walk_check_li3">Estimación de velocidad por pasos</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 data-i18n="seo_h3_run_calc" style="font-size: 1.25rem;">Calculadora de velocidad al correr</h3>
+                            <ul style="padding-left: 20px; font-size: 0.95rem;">
+                                <li data-i18n="seo_run_calc_li1">Velocidad al correr</li>
+                                <li data-i18n="seo_run_calc_li2">Velocidad promedio al correr</li>
+                                <li data-i18n="seo_run_calc_li3">Velocidad al trotar</li>
+                                <li data-i18n="seo_run_calc_li4">Conversión de ritmo a velocidad</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="content-grid" style="margin: 20px 0;">
+                        <div>
+                            <h3 data-i18n="seo_h3_veh_test" style="font-size: 1.25rem;">Prueba de velocidad de vehículos</h3>
+                            <ul style="padding-left: 20px; font-size: 0.95rem;">
+                                <li data-i18n="seo_veh_test_li1">Prueba de velocidad del coche</li>
+                                <li data-i18n="seo_veh_test_li2">Prueba de velocidad de la bicicleta</li>
+                                <li data-i18n="seo_veh_test_li3">Prueba de velocidad del tren</li>
+                                <li data-i18n="seo_veh_test_li4">Calculadora de velocidad del autobús</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 data-i18n="seo_h3_live_speed" style="font-size: 1.25rem;">Velocímetro GPS en vivo</h3>
+                            <ul style="padding-left: 20px; font-size: 0.95rem;">
+                                <li data-i18n="seo_live_speed_li1">Verificador de velocidad de movimiento en tiempo real</li>
+                                <li data-i18n="seo_live_speed_li2">Rastreador de velocidad GPS en línea</li>
+                                <li data-i18n="seo_live_speed_li3">Prueba de velocidad en vivo para coche</li>
+                                <li data-i18n="seo_live_speed_li4">Monitoreo de velocidad de movimiento</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h2 data-i18n="seo_h2_howtocheck" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Cómo comprobar mi velocidad de movimiento en línea</h2>
+                    <p data-i18n="seo_howtocheck_p1">Si te preguntas cómo comprobar mi velocidad de movimiento en línea, sigue estos pasos:</p>
+                    
+                    <div style="margin: 30px 0;">
+                        <div style="margin-bottom: 20px;">
+                            <h4 data-i18n="seo_step1_title" style="color: var(--primary);">Paso 1: Abrir la herramienta de velocidad</h4>
+                            <p data-i18n="seo_step1_desc">Visita el sitio web de verificación de velocidad de movimiento.</p>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <h4 data-i18n="seo_step2_title" style="color: var(--primary);">Paso 2: Permitir el acceso a la ubicación</h4>
+                            <p data-i18n="seo_step2_desc">Se requiere permiso de GPS para un seguimiento preciso.</p>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <h4 data-i18n="seo_step3_title" style="color: var(--primary);">Paso 3: Empezar a moverse</h4>
+                            <p data-i18n="seo_step3_desc">Camina, corre, conduce o viaja normalmente.</p>
+                        </div>
+                        <div>
+                            <h4 data-i18n="seo_step4_title" style="color: var(--primary);">Paso 4: Ver la velocidad en vivo</h4>
+                            <p data-i18n="seo_step4_desc">La herramienta muestra la velocidad actual, promedio y máxima en km/h o mph.</p>
+                        </div>
+                    </div>
+
+                    <h2 data-i18n="seo_h2_walkguide" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Guía de velocidad al caminar</h2>
+                    <h3 data-i18n="seo_h3_avgwalk">¿Cuál es la velocidad promedio al caminar?</h3>
+                    <p data-i18n="seo_avgwalk_p1">La velocidad promedio al caminar para la mayoría de los adultos es de <strong>4 a 5 km/h (2,5 a 3,1 mph)</strong>.</p>
+                    
+                    <strong data-i18n="seo_factors_title" style="display: block; margin-top: 15px;">Factores que afectan la velocidad al caminar:</strong>
+                    <ul style="padding-left: 20px; margin-bottom: 20px;">
+                        <li data-i18n="seo_factors_li1">Edad</li>
+                        <li data-i18n="seo_factors_li2">Nivel de condición física</li>
+                        <li data-i18n="seo_factors_li3">Terreno</li>
+                        <li data-i18n="seo_factors_li4">Clima</li>
+                        <li data-i18n="seo_factors_li5">Estado de salud</li>
+                    </ul>
+
+                    <h3 data-i18n="seo_h3_measwalking">Cómo medir la velocidad mientras caminas</h3>
+                    <p data-i18n="seo_measwalking_p1">Utiliza un rastreador de velocidad GPS en línea o una calculadora de velocidad al caminar para responder: ¿A qué velocidad camino?</p>
+
+                    <h2 data-i18n="seo_h2_runguide" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Guía de velocidad al correr</h2>
+                    <h3 data-i18n="seo_h3_normrun">¿Cuál es la velocidad normal al correr?</h3>
+                    <table style="width: 100%; border-collapse: collapse; margin: 20px 0; background: var(--bg-card); border-radius: 12px; overflow: hidden;">
+                        <thead>
+                            <tr style="background: var(--primary); color: white;">
+                                <th data-i18n="seo_run_table_act" style="padding: 12px; text-align: left;">Actividad</th>
+                                <th data-i18n="seo_run_table_speed" style="padding: 12px; text-align: left;">Velocidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-i18n="seo_run_jog" colspan="2" style="padding: 12px; border-bottom: 1px solid var(--border);">Trotar: 6–8 km/h</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="seo_run_light" colspan="2" style="padding: 12px; border-bottom: 1px solid var(--border);">Carrera ligera: 8–10 km/h</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="seo_run_moderate" colspan="2" style="padding: 12px; border-bottom: 1px solid var(--border);">Carrera moderada: 10–13 km/h</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="seo_run_fast" colspan="2" style="padding: 12px;">Carrera rápida: 13–18+ km/h</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 data-i18n="seo_h3_fanthrun">¿Qué tan rápido puede correr un humano?</h3>
+                    <p data-i18n="seo_fasthrun_p1">Los velocistas de élite pueden superar los 35–45 km/h en ráfagas cortas. La mayoría de los corredores recreativos corren a 8–12 km/h.</p>
+
+                    <h2 data-i18n="seo_h2_vehguide" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Guía de prueba de velocidad de vehículos</h2>
+                    <h3 data-i18n="seo_h3_carspeedtest">¿Qué es mi prueba de velocidad de coche?</h3>
+                    <p data-i18n="seo_carspeed_p1">Una prueba de velocidad de coche comprueba la velocidad de tu vehículo mediante GPS cuando tu tablero está roto o necesitas verificación.</p>
+                    
+                    <h3 data-i18n="seo_h3_supportedveh">Tipos de vehículos compatibles</h3>
+                    <p data-i18n="seo_supported_p1">Nuestra herramienta funciona para coche, bicicleta, tren y autobús. Puedes usarla como un velocímetro en línea mientras viajas.</p>
+
+                    <h2 data-i18n="seo_h2_form_exp" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Explicación de la fórmula de velocidad</h2>
+                    <p data-i18n="seo_form_exp_p1">Para calcular la velocidad manualmente: <strong>v = d / t</strong> (v=Velocidad, d=Distancia, t=Tiempo).</p>
+                    <p data-i18n="seo_form_example_p1" style="background: var(--bg-card); padding: 15px; border-radius: 8px;">Si viajas 120 km en 2 horas, entonces Velocidad = 120 / 2 = 60 km/h.</p>
+
+                    <h2 data-i18n="seo_h2_pop_conv" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Conversiones de velocidad populares</h2>
+                    <p data-i18n="seo_conv_p1" style="font-family: monospace; background: var(--bg-body); padding: 15px; border-radius: 8px;">1 km/h = 0,27778 m/s | 1 mph = 1,60934 km/h</p>
+
+                    <h2 data-i18n="seo_h2_gps_use" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Por qué es útil el seguimiento de velocidad por GPS</h2>
+                    <p data-i18n="seo_gps_use_p1">Una prueba de velocidad por GPS proporciona mediciones en tiempo real sin cálculos manuales. Los beneficios incluyen un seguimiento preciso en vivo para todos los tipos de movimiento en dispositivos móviles.</p>
+
+                    <h2 data-i18n="seo_h2_bestuses" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Los mejores usos para una herramienta de seguimiento de velocidad</h2>
+                    <ul style="padding-left: 20px;">
+                        <li data-i18n="seo_bestuses_li1" style="margin-bottom: 10px;">Fitness: práctica de carrera, mejora de la caminata, seguimiento del ritmo del maratón.</li>
+                        <li data-i18n="seo_bestuses_li2" style="margin-bottom: 10px;">Viajes: monitoreo de la velocidad del vehículo, comprobaciones de la velocidad de viaje en autobús/tren.</li>
+                        <li data-i18n="seo_bestuses_li3" style="margin-bottom: 10px;">Deportes: análisis de sprint, medición de la velocidad en bicicleta.</li>
+                        <li data-i18n="seo_bestuses_li4">Educación: aprendizaje de la fórmula de velocidad, práctica de física.</li>
+                    </ul>
+
+                    <h2 data-i18n="seo_h2_acc_tips" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">Consejos de precisión para obtener los mejores resultados</h2>
+                    <ul style="padding-left: 20px;">
+                        <li data-i18n="seo_acc_tips_li1" style="margin-bottom: 10px;">Úselo al aire libre para obtener una señal de GPS fuerte. Mantenga habilitado el GPS del teléfono.</li>
+                        <li data-i18n="seo_acc_tips_li2">Evite túneles/áreas interiores. Espere unos segundos para la calibración.</li>
+                    </ul>
+
+                    <h2 data-i18n="seo_h2_whysearch" style="margin-top: 40px; margin-bottom: 20px; font-size: 2rem;">¿Por qué la gente busca “¿cuál es mi velocidad?”?</h2>
+                    <p data-i18n="seo_whysearch_p1">Los usuarios quieren un verificador de velocidad instantáneo sin descargar una aplicación para responder “¿qué tan rápido me muevo ahora mismo?”</p>
+
+                    <p data-i18n="seo_final_thoughts" style="margin-top: 40px; padding: 20px; background: var(--bg-card); border-radius: 12px; font-weight: 500;">La herramienta My Moving Speed Test es una de las formas más fáciles de medir la velocidad en línea. Ya sea que necesites una prueba de velocidad en vivo o una calculadora de fórmula de velocidad, esta herramienta ofrece todo en un solo lugar.</p>
+
+                    <h2 data-i18n="faq_title" style="margin-top: 60px; margin-bottom: 30px; font-size: 2.5rem; text-align: center;">Preguntas frecuentes</h2>
+                    
+                    <div class="content-card" style="margin-bottom: 20px;">
+                        <strong data-i18n="seo_faq_q1">¿Cómo calculo mi velocidad de movimiento?</strong>
+                        <p data-i18n="seo_faq_a1">Utiliza la fórmula: Velocidad = Distancia ÷ Tiempo. También puedes usar una calculadora de velocidad de movimiento basada en GPS para una medición automática.</p>
+                    </div>
+                    
+                    <div class="content-card" style="margin-bottom: 20px;">
+                        <strong data-i18n="seo_faq_q2">¿Qué es la velocidad de movimiento?</strong>
+                        <p data-i18n="seo_faq_a2">La velocidad de movimiento se refiere a qué tan rápido se desplaza un objeto o persona en una distancia determinada durante un tiempo determinado.</p>
+                    </div>
+                    
+                    <div class="content-card" style="margin-bottom: 20px;">
+                        <strong data-i18n="seo_faq_q3">¿Cuál es la velocidad promedio al caminar?</strong>
+                        <p data-i18n="seo_faq_a3">La velocidad promedio al caminar es típicamente de 4 a 5 km/h para adultos.</p>
+                    </div>
+                    
+                    <div class="content-card" style="margin-bottom: 20px;">
+                        <strong data-i18n="seo_faq_q4">¿Cómo medir la velocidad mientras caminas?</strong>
+                        <p data-i18n="seo_faq_a4">Utiliza una herramienta de seguimiento de velocidad GPS o una calculadora de velocidad al caminar en tu teléfono.</p>
+                    </div>
+                    
+                    <div class="content-card" style="margin-bottom: 20px;">
+                        <strong data-i18n="seo_faq_q5">¿Cómo calcular la velocidad al correr?</strong>
+                        <p data-i18n="seo_faq_a5">Divide la distancia recorrida por el tiempo empleado, o utiliza una calculadora de velocidad al correr.</p>
+                    </div>
+                    
+                    <div class="content-card" style="margin-bottom: 20px;">
+                        <strong data-i18n="seo_faq_q6">¿Qué tan rápido puede correr un humano?</strong>
+                        <p data-i18n="seo_faq_a6">Los velocistas de élite pueden alcanzar los 35–45 km/h brevemente.</p>
+                    </div>
+
+                    <div class="content-card" style="margin-bottom: 20px;">
+                        <strong data-i18n="seo_faq_q7">¿Cuál es la velocidad normal al correr?</strong>
+                        <p data-i18n="seo_faq_a7">La velocidad normal al correr suele ser de 8 a 12 km/h.</p>
+                    </div>
+
+                    <div class="content-card" style="margin-bottom: 20px;">
+                        <strong data-i18n="seo_faq_q8">¿Cómo comprobar la velocidad de un vehículo sin velocímetro?</strong>
+                        <p data-i18n="seo_faq_a8">Utiliza un velocímetro GPS en línea o un sitio web de seguimiento de velocidad.</p>
+                    </div>
+
+                    <div class="content-card" style="margin-bottom: 20px;">
+                        <strong data-i18n="seo_faq_q9">¿Cómo medir la velocidad usando el móvil?</strong>
+                        <p data-i18n="seo_faq_a9">Habilita el GPS en tu teléfono y utiliza una herramienta de seguimiento de velocidad en vivo.</p>
+                    </div>
+
+                    <div class="content-card">
+                        <strong data-i18n="seo_faq_q10">¿Cuál es la fórmula de la velocidad?</strong>
+                        <p data-i18n="seo_faq_a10">La fórmula de la velocidad es: Velocidad = Distancia / Tiempo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Blog/Latest Articles Section -->
+        <section id="blog" style="padding: 100px 0; background: var(--bg-card);">
+            <div class="container">
+                <div style="text-align: center; max-width: 800px; margin: 0 auto 50px auto;">
+                    <h2 id="blog-title" data-i18n="blog_title">Lo último del blog</h2>
+                    <p id="blog-intro" data-i18n="blog_intro" style="color: var(--text-dim); font-size: 1.1rem;">Opiniones de expertos, guías y consejos sobre el seguimiento de la velocidad por GPS y las herramientas web modernas.</p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                    <article class="tool-item-card" style="text-align: left; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+                        <img src="../assets/images/gps-article-header.png" alt="How to Check Your Moving Speed" style="width: 100%; height: 200px; object-fit: cover;">
+                        <div style="padding: 25px;">
+                            <h3 style="margin-bottom: 15px; font-size: 1.5rem;">How to Check Your Moving Speed Online Using GPS</h3>
+                            <p style="color: var(--text-dim); margin-bottom: 20px; font-size: 0.95rem;">A comprehensive guide on how GPS speed tracking works, mobile speed test tools, and why browser-based speedometers are the best choice for privacy.</p>
+                            <a href="../how-to-check-your-moving-speed-online-using-gps.html" class="red" style="font-weight: 700; text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em;">Read Full Article →</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <ul>
+                    <li><a href="../about.html" data-i18n="footer_about">Sobre Nosotros</a></li>
+                    <li><a href="../contact.html" data-i18n="footer_contact">Contáctenos</a></li>
+                    <li><a href="../privacy-policy.html" data-i18n="footer_privacy">Política de Privacidad</a></li>
+                    <li><a href="../disclaimer.html" data-i18n="footer_disclaimer">Descargo de Responsabilidad</a></li>
+                    <li><a href="../terms.html" data-i18n="footer_terms">Términos y Condiciones</a></li>
+                </ul>
+            </div>
+            <div class="copyright">
+                © 2026 https://mymovingspeed.github.io/mymovingspeed/
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/script.js"></script>
+</body>
+</html>
